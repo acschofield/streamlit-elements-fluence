@@ -3,6 +3,7 @@ from streamlit_elements_fluence.core.exceptions import *
 from streamlit_elements_fluence.modules import *
 from streamlit_elements_fluence.version import __version__
 from streamlit_elements_fluence.core.jscallback import JSCallback
+from streamlit_elements_fluence.core.propelement import PropElement
 
 
 def elements(key: str) -> None:

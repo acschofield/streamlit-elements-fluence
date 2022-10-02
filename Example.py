@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_elements_fluence import elements, mui, JSCallback, extras
+from streamlit_elements_fluence import elements, mui, JSCallback, extras, PropElement
 
 st.session_state.mui_license = "a license that was purchased from https://mui.com/r/x-get-license"
 
@@ -23,8 +23,8 @@ rows = [
 
 with elements("an_example"):
 
-    mui.DataGridPro(
-        components={"Toolbar": mui.GridToolbar()},
+    mui.DataGrid(
+        components={"Toolbar": PropElement(mui.GridToolbar())},
         columns=columns,
         rows=rows,
         autoHeight=True,

@@ -82,7 +82,7 @@ const send = (data: Record<string, any>) => {
 }
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
-const render = (module: string, element: string, props: any, children: React.ReactNode[]) => {
+const render = (module: string, element: string, props: any, children: React.ReactNode[], isProp: boolean) => {
   if (!loaders.hasOwnProperty(module)) {
     throw new Error(`Module ${module} does not exist`)
   }
@@ -103,11 +103,12 @@ const render = (module: string, element: string, props: any, children: React.Rea
         } else {
           // console.log(module, element, key, value)
         }
+
         if (key == 'Toolbar') {
           const loadedElement = loaders[module]("GridToolbar")
           console.log("___ 2", module, element, key, typeof obj[key], obj[key])
           console.log("___ 2a", loadedElement)
-          obj[key] = loadedElement
+          // obj[key] = loadedElement
           //obj[key] = jsx(loadedElement, {})
           // obj[key] = render(module, "GridToolbar", {}, [])
         }
@@ -115,8 +116,8 @@ const render = (module: string, element: string, props: any, children: React.Rea
     })
   }
   renderProps(props)
-  const result = jsx(loadedElement, props, ...children)
-  console.log("___ 3", module, element, result)
+  const result = isProp ? loadedElement : jsx(loadedElement, props, ...children)
+  console.log("___ 3", module, element, result, isProp)
   return result
 }
 

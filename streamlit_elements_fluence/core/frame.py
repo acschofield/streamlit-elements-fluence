@@ -8,6 +8,7 @@ from streamlit_elements_fluence.core.callback import ElementsCallbackManager, El
 from streamlit_elements_fluence.core.element import Element
 from streamlit_elements_fluence.core.render import render_component
 from streamlit_elements_fluence.core.jscallback import JSCallback
+from streamlit_elements_fluence.core.propelement import PropElement
 
 ELEMENTS_FRAME_KEY = f"{__name__}.elements_frame"
 
@@ -76,6 +77,11 @@ class ElementsFrame:
     def serialize(self, obj):
         if isinstance(obj, Element):
             self._serialized.add(obj)
+            print("___", repr(obj))
+            return repr(obj)
+
+        if isinstance(obj, PropElement):
+            self._serialized.add(obj._element)
             print("___", repr(obj))
             return repr(obj)
 
