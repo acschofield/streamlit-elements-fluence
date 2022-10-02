@@ -80,6 +80,7 @@ const send = (data: Record<string, any>) => {
   // Send data to Streamlit.
   Streamlit.setComponentValue(JSON.stringify(data, getReplacer()))
 }
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 const render = (module: string, element: string, props: any, children: React.ReactNode[]) => {
   if (!loaders.hasOwnProperty(module)) {
@@ -87,11 +88,36 @@ const render = (module: string, element: string, props: any, children: React.Rea
   }
 
   const loadedElement = loaders[module](element)
+  console.log("___ 1", module, element)
+
   if (loadedElement === undefined) {
     throw new Error(`Element ${element} does not exist in module ${module}`)
   }
-
-  return jsx(loadedElement, props, ...children)
+  const renderProps = (obj: any) => {
+    Object.keys(obj).forEach(key => {
+      const value = obj[key];
+      if (value != null) {
+        console.log(module, element, key, typeof value, value)
+        if (typeof value === 'object') {
+          renderProps(value)
+        } else {
+          // console.log(module, element, key, value)
+        }
+        if (key == 'Toolbar') {
+          const loadedElement = loaders[module]("GridToolbar")
+          console.log("___ 2", module, element, key, typeof obj[key], obj[key])
+          console.log("___ 2a", loadedElement)
+          obj[key] = loadedElement
+          //obj[key] = jsx(loadedElement, {})
+          // obj[key] = render(module, "GridToolbar", {}, [])
+        }
+      }
+    })
+  }
+  renderProps(props)
+  const result = jsx(loadedElement, props, ...children)
+  console.log("___ 3", module, element, result)
+  return result
 }
 
 const ElementsApp = ({ args, theme }: ElementsAppProps) => {

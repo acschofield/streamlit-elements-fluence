@@ -24,11 +24,12 @@ rows = [
 with elements("an_example"):
 
     mui.DataGridPro(
+        components={"Toolbar": mui.GridToolbar()},
         columns=columns,
         rows=rows,
         autoHeight=True,
     )
 
-    mui.Typography("Click me!", onClick=JSCallback("""(params) => {alert('Clicked!')}"""))
+    # mui.Typography("Click me!", onClick=JSCallback("""(params) => {alert('Clicked!')}"""))
 
-    extras.InnerHTML(html="""<div onClick="alert('Clicked!')"<b>Click me!</b></div>""")
+    # extras.InnerHTML(html="""<div onClick="alert('Clicked!')"<b>Click me!</b></div>""")

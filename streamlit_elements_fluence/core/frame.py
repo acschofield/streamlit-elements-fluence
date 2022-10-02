@@ -76,6 +76,7 @@ class ElementsFrame:
     def serialize(self, obj):
         if isinstance(obj, Element):
             self._serialized.add(obj)
+            print("___", repr(obj))
             return repr(obj)
 
         elif isinstance(obj, (Callable, ElementsCallback)):
@@ -88,11 +89,13 @@ class ElementsFrame:
         elif isinstance(obj, Mapping):
             items = (json.dumps(key) + ":" + self.serialize(value) for key, value in obj.items())
             items = ",".join(items)
+            print("___ 2 ", f"{{{items}}}")
             return f"{{{items}}}"
 
         elif isinstance(obj, Iterable) and not isinstance(obj, str):
             items = (self.serialize(item) for item in obj)
             items = ",".join(items)
+            print("___ 3 ", f"[{items}]")
             return f"[{items}]"
 
         else:
