@@ -75,13 +75,13 @@ class ElementsFrame:
         element(*(child for child in children if child not in self._serialized))
 
     def serialize(self, obj):
-        if isinstance(obj, Element):
-            self._serialized.add(obj)
+        if isinstance(obj, PropElement):
+            self._serialized.add(obj._element)
             print("___", repr(obj))
             return repr(obj)
 
-        if isinstance(obj, PropElement):
-            self._serialized.add(obj._element)
+        elif isinstance(obj, Element):
+            self._serialized.add(obj)
             print("___", repr(obj))
             return repr(obj)
 
@@ -108,4 +108,6 @@ class ElementsFrame:
             return json.dumps(obj)
 
     def __repr__(self):
-        return self.serialize(child for child in self._children if child not in self._serialized)
+        result = self.serialize(child for child in self._children if child not in self._serialized)
+        print("___ 4 ", result)
+        return result

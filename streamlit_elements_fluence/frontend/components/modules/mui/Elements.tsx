@@ -131,7 +131,7 @@ const mui: ElementsRecord = {
   Typography: dynamic(() => import("@mui/material/Typography"), { loading: ElementsLoading, ssr: false }),
   Zoom: dynamic(() => import("@mui/material/Zoom"), { loading: ElementsLoading, ssr: false }),
 }
-
+  
 const dataGrid: ElementsRecord = {
   DataGrid: dynamic(() => import("@mui/x-data-grid").then(m => m.DataGrid), { loading: ElementsLoading, ssr: false }),
   GridActionsCellItem: dynamic(() => import("@mui/x-data-grid").then(m => m.GridActionsCellItem), { loading: ElementsLoading, ssr: false }),

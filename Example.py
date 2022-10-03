@@ -24,7 +24,16 @@ rows = [
 with elements("an_example"):
 
     mui.DataGrid(
-        components={"Toolbar": PropElement(mui.GridToolbar())},
+        # components={"Toolbar": mui.GridToolbarContainer(mui.GridToolbarExport())},
+        # components={"Toolbar": PropElement(mui.GridToolbar())},
+        components={
+            "Toolbar": mui.GridToolbar(isProp=True),
+            "Footer1": mui.Paper(
+                "banana",
+                isProp=True,
+            ),
+        },
+        # components={"Toolbar": mui.GridToolbarContainer(mui.GridToolbarExport(isProp=True), isProp=True)},
         columns=columns,
         rows=rows,
         autoHeight=True,

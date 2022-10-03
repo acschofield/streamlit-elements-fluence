@@ -80,9 +80,8 @@ const send = (data: Record<string, any>) => {
   // Send data to Streamlit.
   Streamlit.setComponentValue(JSON.stringify(data, getReplacer()))
 }
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
-const render = (module: string, element: string, props: any, children: React.ReactNode[], isProp: boolean) => {
+const render = (module: string, element: string, props: any, children: React.ReactNode[]) => {
   if (!loaders.hasOwnProperty(module)) {
     throw new Error(`Module ${module} does not exist`)
   }
@@ -93,8 +92,17 @@ const render = (module: string, element: string, props: any, children: React.Rea
   if (loadedElement === undefined) {
     throw new Error(`Element ${element} does not exist in module ${module}`)
   }
-  const result = isProp ? loadedElement : jsx(loadedElement, props, ...children)
-  console.log("___ 3", module, element, result, isProp)
+
+  if (props.isProp) {
+    console.log("___ 2", module, element, loadedElement, children)
+    if (loadedElement.props) {
+      console.log("___ 2a", module, element, loadedElement.props.children)
+    }
+    //return result.type
+    return loadedElement
+  }
+  let result = jsx(loadedElement, props, ...children)
+  console.log("___ 3", module, element, result)
   return result
 }
 
