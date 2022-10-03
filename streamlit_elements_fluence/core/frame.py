@@ -8,7 +8,6 @@ from streamlit_elements_fluence.core.callback import ElementsCallbackManager, El
 from streamlit_elements_fluence.core.element import Element
 from streamlit_elements_fluence.core.render import render_component
 from streamlit_elements_fluence.core.jscallback import JSCallback
-from streamlit_elements_fluence.core.propelement import PropElement
 
 ELEMENTS_FRAME_KEY = f"{__name__}.elements_frame"
 
@@ -75,14 +74,8 @@ class ElementsFrame:
         element(*(child for child in children if child not in self._serialized))
 
     def serialize(self, obj):
-        if isinstance(obj, PropElement):
-            self._serialized.add(obj._element)
-            print("___", repr(obj))
-            return repr(obj)
-
-        elif isinstance(obj, Element):
+        if isinstance(obj, Element):
             self._serialized.add(obj)
-            print("___", repr(obj))
             return repr(obj)
 
         elif isinstance(obj, (Callable, ElementsCallback)):
@@ -95,19 +88,15 @@ class ElementsFrame:
         elif isinstance(obj, Mapping):
             items = (json.dumps(key) + ":" + self.serialize(value) for key, value in obj.items())
             items = ",".join(items)
-            print("___ 2 ", f"{{{items}}}")
             return f"{{{items}}}"
 
         elif isinstance(obj, Iterable) and not isinstance(obj, str):
             items = (self.serialize(item) for item in obj)
             items = ",".join(items)
-            print("___ 3 ", f"[{items}]")
             return f"[{items}]"
 
         else:
             return json.dumps(obj)
 
     def __repr__(self):
-        result = self.serialize(child for child in self._children if child not in self._serialized)
-        print("___ 4 ", result)
-        return result
+        return self.serialize(child for child in self._children if child not in self._serialized)

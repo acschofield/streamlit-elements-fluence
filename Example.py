@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_elements_fluence import elements, mui, JSCallback, extras, PropElement
+from streamlit_elements_fluence import elements, mui, JSCallback, extras
 
 st.session_state.mui_license = "a license that was purchased from https://mui.com/r/x-get-license"
 
@@ -23,22 +23,15 @@ rows = [
 
 with elements("an_example"):
 
-    mui.DataGrid(
-        # components={"Toolbar": mui.GridToolbarContainer(mui.GridToolbarExport())},
-        # components={"Toolbar": PropElement(mui.GridToolbar())},
-        components={
-            "Toolbar": mui.GridToolbar(isProp=True),
-            "Footer1": mui.Paper(
-                "banana",
-                isProp=True,
-            ),
-        },
-        # components={"Toolbar": mui.GridToolbarContainer(mui.GridToolbarExport(isProp=True), isProp=True)},
+    mui.DataGridPro(
         columns=columns,
         rows=rows,
         autoHeight=True,
+        components={
+            "Toolbar": mui.GridToolbar(direct=True),
+        },
     )
 
-    # mui.Typography("Click me!", onClick=JSCallback("""(params) => {alert('Clicked!')}"""))
+    mui.Typography("Click me!", onClick=JSCallback("""(params) => {alert('Clicked!')}"""))
 
-    # extras.InnerHTML(html="""<div onClick="alert('Clicked!')"<b>Click me!</b></div>""")
+    extras.InnerHTML(html="""<div onClick="alert('Clicked!')"<b>Click me!</b></div>""")

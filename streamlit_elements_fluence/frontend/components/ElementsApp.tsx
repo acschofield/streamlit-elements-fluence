@@ -87,23 +87,13 @@ const render = (module: string, element: string, props: any, children: React.Rea
   }
 
   const loadedElement = loaders[module](element)
-  console.log("___ 1", module, element)
-
   if (loadedElement === undefined) {
     throw new Error(`Element ${element} does not exist in module ${module}`)
   }
-
-  if (props.isProp) {
-    console.log("___ 2", module, element, loadedElement, children)
-    if (loadedElement.props) {
-      console.log("___ 2a", module, element, loadedElement.props.children)
-    }
-    //return result.type
+  if (props.direct) {
     return loadedElement
   }
-  let result = jsx(loadedElement, props, ...children)
-  console.log("___ 3", module, element, result)
-  return result
+  return jsx(loadedElement, props, ...children)
 }
 
 const ElementsApp = ({ args, theme }: ElementsAppProps) => {
